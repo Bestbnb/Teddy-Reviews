@@ -8,7 +8,7 @@ let app = express();
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 
-app.post('/', RandomGenerator.add100Users);
+// app.post('/', RandomGenerator.add100Users);
 
 const PORT = 3001;
 app.listen(PORT, function() {
