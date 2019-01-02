@@ -1,104 +1,163 @@
-const Sequelize = require('sequelize');
-const faker = require('faker');
+/*************************************************************************
+Attempt 1
+*************************************************************************/
 
-const connection = new Sequelize('reviewsDB', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql'
-})
+// const db = require('./db/dbModel');
 
-// return connection.query("CREATE DATABASE IF NOT EXISTS `reviews`;")
+// const createUsers = (req, res) => {
+//   db.Users.create({
+//     name: req.query.name, 
+//     profile_picture: req.query.profile_picture,
+//     profile_page: req.query.profile_page
+//   })
+//   .then(() => {
+//     console.log('SUCCESS: Created users!');
+//     res.status(201);
+//     res.send('Created users!');
+//   })
+//   .catch(err => {
+//     console.log('FAILED: Couldnt NOT create users!');
+//     res.status(500);
+//     res.send(err);
+//   });
+// };
 
-connection.authenticate()
-  .then(() => {
-    console.log('Connected!!')
-  })
-  .catch((err) => {
-    console.error(err)
-  });
+// const createStars = (req, res) => {
+//   db.Stars.create({
+//     accuracy: req.body.accuracy,
+//     communication: req.body.communication,
+//     cleanliness: req.body.cleanliness,
+//     location: req.body.location,
+//     check_in: req.body.check_in,
+//     value: req.body.value
+//   })
+//   .then(() => {
+//     console.log('SUCCESS: Created stars!');
+//     res.status(201);
+//     res.send('Created stars!');
+//   })
+//   .catch(err => {
+//     console.log('FAILED: Could NOT create stars!');
+//     res.status(500);
+//     res.send(err);
+//   });
+// };
 
-const Users = connection.define('users', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  name: Sequelize.STRING,
-  profile_picture: Sequelize.STRING,
-  profile_page: Sequelize.STRING
-})
+// const createReviews = (req, res) => {
+//   db.Reviews.create({
+//     date_published: req.body.date_published,
+//     reviews: req.body.reviews
+//   })
+//   .then(() => {
+//     console.log('SUCCESS: Created reviews!');
+//     res.status(201);
+//     res.send('Created reviews!');
+//   })
+//   .catch(err => {
+//     console.log('FAILED: Could NOT create reviews!');
+//     res.status(500);
+//     res.send(err);
+//   });
+// };
 
-const Stars = connection.define('stars', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  accuracy: Sequelize.INTEGER,
-  communication: Sequelize.INTEGER,
-  cleanliness: Sequelize.INTEGER,
-  location: Sequelize.INTEGER,
-  check_in: Sequelize.INTEGER,
-  value: Sequelize.INTEGER
-})
+// const findAllUsers = (req, res) => {
+//   db.Users.findAll()
+//     .then(bookings => {
+//       console.log('SUCCESS: Retrieved all users!');
+//       res.status(200);
+//       res.send(bookings);
+//     })
+//     .catch(err => {
+//       console.log('FAILED: Could not retrieve users!');
+//       res.status(500);
+//       res.send(err);
+//     });
+// };
 
-const Reviews = connection.define('reviews', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  date_published: Sequelize.DATE,
-  review: Sequelize.STRING
-})
+// const findAllStars = (req, res) => {
+//   db.Stars.findAll()
+//     .then(data => {
+//       console.log('SUCCESS: Retreved all stars!');
+//       res.status(200);
+//       res.send(data);
+//     })
+//     .catch(err => {
+//       console.log('FAILED: Could not retrieve stars!');
+//       res.status(500);
+//       res.send(err);
+//     });
+// };
 
-Users.belongsTo(Reviews);
-Users.belongsTo(Stars);
-Stars.belongsTo(Reviews);
+// const findAllReviews = (req, res) => {
+//   db.Reviews.findAll()
+//     .then(data => {
+//       console.log('SUCCESS: Retreved all reviews!');
+//       res.status(200);
+//       res.send(data);
+//     })
+//     .catch(err => {
+//       console.log('FAILED: Could not retrieve reviews!');
+//       res.status(500);
+//       res.send(err);
+//     });
+// };
 
-Users.sync();
-Stars.sync();
-Reviews.sync();
+// module.exports = {
+//   createUsers,
+//   createStars,
+//   createReviews,
+//   findAllUsers,
+//   findAllStars,
+//   findAllReviews
+// };
 
-Users.destroy({
-  where: {},
-  truncate: true
-});
-Stars.destroy({
-  where: {},
-  truncate: true
-});
-Reviews.destroy({
-  where: {},
-  truncate: true
-});
+/*************************************************************************
+Attempt 2
+*************************************************************************/
 
-for (let i = 0; i < 100; i++) {
-  let dummyDataUsers = {
-    name: faker.name.findName(),
-    profile_picture: faker.image.avatar(),
-    profile_page: faker.internet.url()
-  };
-  Users.create(dummyDataUsers);
-  
-  let dummyDataStars = {
-    accuracy: faker.random.number(5),
-    communication: faker.random.number(5),
-    cleanliness: faker.random.number(5),
-    location: faker.random.number(5),
-    check_in: faker.random.number(5),
-    value: faker.random.number(5)
-  };
-  Stars.create(dummyDataStars);
-  
-  let dummyDataReviews = {
-    date_published: faker.date.past(3),
-    review: faker.lorem.sentence()
-  };
-  Reviews.create(dummyDataReviews);
-}
+// var { Reviews } = require("../database/models.js");
+
+// const controller = {
+//   get: (req, res) => {
+//     Reviews.find({ House: req.params.House }, (err, docs) => {
+//       if (err) {
+//         res.status(404).send(err);
+//       } else {
+//         res.status(200).send(docs);
+//       }
+//     });
+//   },
+
+//   post: (req, res) => {
+//     Reviews.find(
+//       { Text: { $regex: req.body.Text, $options: "i" }, House: req.body.House },
+//       (err, docs) => {
+//         if (err) {
+//           res.status(404).send(err);
+//         } else {
+//           res.status(200).send(docs);
+//         }
+//       }
+//     );
+//   }
+// };
+
+// module.exports.controller = controller;
+
+/*************************************************************************
+Attempt 3
+*************************************************************************/
+
+const models = require('./models');
 
 module.exports = {
-  Users,
-  Stars,
-  Reviews
+  get: (req, res) => {
+    models.Review.find({ room_id: Number(req.params.roomId) }, (err, reviews) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(reviews);
+      }
+    });
+  },
 };
