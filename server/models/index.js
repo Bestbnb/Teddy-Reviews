@@ -1,26 +1,28 @@
 const mongoose = require('mongoose');
+// const blah = require('./Review.js');
+
 const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/bestbnb-reviews';
+// database:27017
+// localhost
 mongoose.connect(dbURI);
 
-let db = mongoose.connection;
-
-db.on('connected', () => {
+mongoose.connection.on('connected', () => {
   console.log(`Mongoose default connection open to ${dbURI}`);
 });
 
 // If the connection throws an error
-db.on('error', (err) => {
+mongoose.connection.on('error', (err) => {
   console.log(`Mongoose default connection error: ${err}`);
 });
 
 // When the connection is disconnected
-db.on('disconnected', () => {
+mongoose.connection.on('disconnected', () => {
   console.log('Mongoose default connection disconnected');
 });
 
 // If the Node process ends, close the Mongoose connection
 process.on('SIGINT', () => {
-  db.close(() => {
+  mongoose.connection.close(() => {
     console.log('Mongoose default connection disconnected through app termination');
     process.exit(0);
   });
@@ -32,10 +34,10 @@ Schema
 
 const ReviewSchema = new mongoose.Schema({
   home_id: Number,
-  username: String,
+  user: String,
   created_at: String,
   review_text: String,
-  profile_pciture: String,
+  image_url: String,
   accuracy_rating: Number,
   communication_rating: Number,
   cleanliness_rating: Number,
@@ -47,4 +49,6 @@ const ReviewSchema = new mongoose.Schema({
 
 const Review = mongoose.model('Review', ReviewSchema);
 
-module.exports = { Review };
+module.exports = {
+  Review
+};
