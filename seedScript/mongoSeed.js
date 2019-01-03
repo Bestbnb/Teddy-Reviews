@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const faker = require('faker');
-const db = require('./../server/models/index.js');
+const db = require('../server/models');
 
 class ReviewGenerator {
   constructor() {
@@ -8,15 +8,15 @@ class ReviewGenerator {
   }
 
   createReviews() {
-    const years = [2016, 2017, 2018];
-    for (let i = 0; i < 100; i ++) {
-      for (let j = 0; j < Math.floor(Math.random() * (10000)); j++) {
+    const years = [2017, 2018];
+    for (let i = 0; i < 100; i += 1) {
+      for (let j = 0; j < Math.floor(Math.random() * (1000)); j++) {
         const review = {};
         review.home_id = i;
         review.username = faker.name.findName();
         review.created_at = `${faker.date.month()} ${years[Math.floor(Math.random() * (3))]}`;
         review.review_text = faker.lorem.paragraph();
-        review.profile_picture = `https://s3-us-west-1.amazonaws.com/bestbnbusernameimages/randPeopleImages/randPerson${Math.floor(Math.random() * (40)) + 1}.jpg`;
+        review.profile_picture = `https://s3-us-west-1.amazonaws.com/airfecuserimages/randPeopleImages/randPerson${Math.floor(Math.random() * (40)) + 1}.jpg`;
 
         review.accuracy_rating = faker.random.number({
           min: 1,
@@ -67,6 +67,7 @@ class ReviewGenerator {
   }
 }
 
+// Clears the database each time.
 db.Review.remove({}).exec((err) => {
   if (err) {
     console.log(err);
