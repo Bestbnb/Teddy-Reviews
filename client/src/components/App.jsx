@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import Search from './Search.jsx';
 import SingleReview from './SingleReview.jsx';
 import Rating from './Rating.jsx';
 import PageNavigation from './PageNavigation.jsx';
 
-class Reviews extends Component {
+class Reviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
