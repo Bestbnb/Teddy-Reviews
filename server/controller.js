@@ -1,6 +1,6 @@
 const models = require('./models');
 
-module.exports = {
+const reviews = {
   get: (req, res) => {
     models.Review.find({ home_id: Number(req.params.homeId) }, (err, reviews) => {
       if (err) {
@@ -11,3 +11,5 @@ module.exports = {
     });
   },
 };
+
+module.exports = { reviews }
