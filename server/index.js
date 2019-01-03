@@ -1,13 +1,28 @@
 const express = require('express');
+const path = require('path');
+const routes = require('./routes');
 const bodyParser = require('body-parser');
-const db = require('./../database/index.js')
 
-let app = express();
+const app = express();
 
-app.use(express.static(__dirname + '/../client/dist'));
-app.use(bodyParser.json());
-
-const PORT = 3001;
-app.listen(PORT, function() {
-  console.log(`listening on PORT ${PORT}!`);
+app.get('/', (req, res) => {
+  res.redirect('/home/1');
 });
+
+app.use(express.static('public/'));
+app.use(express.static('client/dist'));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.get('/home/:homeId', (req, res) => {
+  const reactPath = path.join(__dirname, '../public/index.html');
+  res.sendFile(reactPath);
+});
+
+app.use('/api', routes);
+
+const PORT = 3002;
+app.listen(PORT, () => console.log(`listening on port ${PORT}!`));
+
+module.exports = app;
