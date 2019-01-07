@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/bestbnb-reviews';
+const dbURI = process.env.MONGODB_URI || 'mongodb://database:27017/bestbnb-reviews';
+// replace "localhost" with "database:27017" (for docker-compose)
+// localhost 
 
 mongoose.connect(dbURI);
 
