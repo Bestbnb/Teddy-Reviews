@@ -185,9 +185,9 @@ class Reviews extends React.Component {
         </div>
       );
     }
-    // return (
-    //   <div />
-    // );
+    return (
+      <div />
+    );
   }
 
   handleSearchInput(event) {
